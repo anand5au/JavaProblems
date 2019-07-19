@@ -1,6 +1,7 @@
 package problems;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,11 +22,16 @@ class Interval
 		start = s;
 		end = e;
 	}
+
+	@Override
+	public String toString() {
+		return this.start + " : " + this.end;
+	}
 }
 
 public class MergeIntervals
 {
-	public List<Interval> merge(List<Interval> intervals)
+	public static List<Interval> merge(List<Interval> intervals)
 	{
 		List<Interval> ans = new ArrayList<Interval>();
 
@@ -52,10 +58,19 @@ public class MergeIntervals
 			}
 			else
 			{
-				prev = new Interval(prev.start, Math.max(prev.end, curr.end));
+				prev.end = Math.max(prev.end, curr.end);
 			}
 		}
 		ans.add(prev);
 		return ans;
+	}
+
+	public static void main(String args[]) {
+		Interval arr[]=new Interval[4];
+		arr[0]=new Interval(6,8);
+		arr[1]=new Interval(1,9);
+		arr[2]=new Interval(2,4);
+		arr[3]=new Interval(4,7);
+		System.out.println(merge(Arrays.asList(arr)));
 	}
 }

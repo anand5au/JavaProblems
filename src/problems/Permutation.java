@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Permutation
 {
+	/************************************ approach 1 ***************************************************/
 	private static List<String> perm(String s) {
 		if (s == null)
 			return null;
@@ -29,7 +30,7 @@ public class Permutation
 		return (s.substring(0, i) + c + s.substring(i));
 	}
 
-	// alternative approach
+	/************************************ approach 2 ***************************************************/
 	private static ArrayList<String> getPerms(String s) {
 		ArrayList<String> result = new ArrayList<>();
 		getPerms("", s, result);
@@ -47,6 +48,32 @@ public class Permutation
 			char c = rem.charAt(i);
 			getPerms(prefix + c, before + after, result);
 		}
+	}
+
+	/************************************ Permutation of array (similar to approach 1) ***************************************************/
+	public List<List<Integer>> permute(int[] nums) {
+		return permute(nums, 0);
+	}
+
+	private List<List<Integer>> permute(int[] nums, int index) {
+		List<List<Integer>> result = new ArrayList<>();
+
+		if(index == nums.length) {
+			result.add(new ArrayList<Integer>());
+			return result;
+		}
+
+		int first = nums[index++];
+		List<List<Integer>> remainingPermuted = permute(nums, index);
+
+		for(List<Integer> list : remainingPermuted) {
+			for(int i=0; i<=list.size(); i++) {
+				List<Integer> temp = new ArrayList<>(list);
+				temp.add(i, first);
+				result.add(temp);
+			}
+		}
+		return result;
 	}
 
 	public static void main(String[] args) {
